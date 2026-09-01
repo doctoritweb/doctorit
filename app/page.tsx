@@ -28,7 +28,7 @@ export default function Home() {
                     href="/products?category=laptops"
                     className="border-2 border-white text-white hover:bg-white hover:text-blue-900 px-8 py-3.5 rounded-lg font-semibold text-lg transition"
                   >
-                    Explore Laptops
+                    Explore Laptops nnnnnnn
                   </Link>
                 </div>
               </div>
