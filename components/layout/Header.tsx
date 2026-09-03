@@ -3,7 +3,8 @@
 import Link from "next/link";
 import { useState } from "react";
 import { usePathname } from "next/navigation";
-
+import Image from "next/image";
+import logo from "../../public/logo.png"
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
@@ -23,15 +24,20 @@ export default function Header() {
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
           
-          {/* Logo */}
-          <Link href="/" className="flex items-center gap-2">
-            <div className="w-9 h-9 bg-blue-600 rounded-lg flex items-center justify-center">
-              <span className="text-white font-bold text-lg">IT</span>
-            </div>
-            <span className="text-xl font-bold text-gray-900">
-              Doctor<span className="text-blue-600">IT</span>
-            </span>
-          </Link>
+      {/* Logo */}
+      <Link href="/" className="flex items-center gap-2">
+        <Image
+          src={logo}
+          alt="DoctorIT Logo"
+          width={210}
+          height={150}
+          className="rounded-lg"
+          priority
+        />
+        {/* <span className="text-xl font-bold text-gray-900">
+          Doctor<span className="text-blue-600">IT</span>
+        </span> */}
+      </Link>
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center gap-8">
