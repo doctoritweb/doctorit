@@ -1,17 +1,29 @@
-import { 
-  ShieldCheck, 
-  Clock, 
-  Wrench, 
-  BadgeCheck, 
-  Headphones, 
-  ThumbsUp 
+"use client";
+
+import React, { useRef, useState } from "react";
+import {
+  ShieldCheck,
+  Clock,
+  Wrench,
+  BadgeCheck,
+  Headphones,
+  ThumbsUp,
+  LucideIcon,
 } from "lucide-react";
 
-const features = [
+interface Feature {
+  id: number;
+  title: string;
+  description: string;
+  icon: LucideIcon;
+}
+
+const features: Feature[] = [
   {
     id: 1,
     title: "Expert Technicians",
-    description: "Our certified engineers have years of experience in laptop, desktop and printer repairs.",
+    description:
+      "Our certified engineers have years of experience in laptop, desktop and printer repairs.",
     icon: Wrench,
   },
   {
@@ -46,11 +58,78 @@ const features = [
   },
 ];
 
+function FeatureCard({ feature }: { feature: Feature }) {
+  const cardRef = useRef<HTMLDivElement>(null);
+  const [style, setStyle] = useState<React.CSSProperties>({});
+  const [spotlight, setSpotlight] = useState({ x: 50, y: 50, active: false });
+
+  function handleMouseMove(e: React.MouseEvent<HTMLDivElement>) {
+    const card = cardRef.current;
+    if (!card) return;
+
+    const rect = card.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+
+    // Position for the cursor-tracking spotlight, as a percentage
+    const px = (x / rect.width) * 100;
+    const py = (y / rect.height) * 100;
+    setSpotlight({ x: px, y: py, active: true });
+
+    // Subtle 3D tilt based on cursor position relative to card center
+    const midX = rect.width / 2;
+    const midY = rect.height / 2;
+    const rotateY = ((x - midX) / midX) * 6; // max ~6deg
+    const rotateX = -((y - midY) / midY) * 6;
+
+    setStyle({
+      transform: `perspective(800px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-4px)`,
+    });
+  }
+
+  function handleMouseLeave() {
+    setStyle({
+      transform: "perspective(800px) rotateX(0deg) rotateY(0deg) translateY(0px)",
+    });
+    setSpotlight((s) => ({ ...s, active: false }));
+  }
+
+  const Icon = feature.icon;
+
+  return (
+    <div
+      ref={cardRef}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      style={style}
+      className="group relative overflow-hidden bg-slate-50 hover:bg-blue-50 border border-slate-200 hover:border-blue-200 rounded-2xl p-7 transition-[background-color,border-color,box-shadow,transform] duration-300 ease-out will-change-transform hover:shadow-xl hover:shadow-blue-100"
+    >
+      {/* Cursor-tracking spotlight */}
+      <div
+        className="pointer-events-none absolute inset-0 rounded-2xl transition-opacity duration-300"
+        style={{
+          opacity: spotlight.active ? 1 : 0,
+          background: `radial-gradient(220px circle at ${spotlight.x}% ${spotlight.y}%, rgba(37, 99, 235, 0.12), transparent 70%)`,
+        }}
+      />
+
+      <div className="relative">
+        <div className="w-14 h-14 bg-white group-hover:bg-blue-600 border border-slate-200 group-hover:border-blue-600 rounded-xl flex items-center justify-center mb-5 transition-all duration-300 shadow-sm group-hover:scale-110 group-hover:rotate-3">
+          <Icon className="w-7 h-7 text-blue-600 group-hover:text-white transition-colors duration-300" />
+        </div>
+
+        <h3 className="text-xl font-bold text-slate-900 mb-3">{feature.title}</h3>
+
+        <p className="text-slate-600 leading-relaxed">{feature.description}</p>
+      </div>
+    </div>
+  );
+}
+
 export default function WhyChooseUs() {
   return (
-    <section className="py-16 md:py-24 bg-white">
+    <section className="py-16 md:py-24 bg-white" id="why-choose-us">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-14">
           <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">
@@ -64,25 +143,9 @@ export default function WhyChooseUs() {
         {/* Features Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
           {features.map((feature) => (
-            <div
-              key={feature.id}
-              className="group bg-slate-50 hover:bg-blue-50 border border-slate-200 hover:border-blue-200 rounded-2xl p-7 transition-all duration-300"
-            >
-              <div className="w-14 h-14 bg-white group-hover:bg-blue-600 border border-slate-200 group-hover:border-blue-600 rounded-xl flex items-center justify-center mb-5 transition-all duration-300 shadow-sm">
-                <feature.icon className="w-7 h-7 text-blue-600 group-hover:text-white transition-colors duration-300" />
-              </div>
-
-              <h3 className="text-xl font-bold text-slate-900 mb-3">
-                {feature.title}
-              </h3>
-
-              <p className="text-slate-600 leading-relaxed">
-                {feature.description}
-              </p>
-            </div>
+            <FeatureCard key={feature.id} feature={feature} />
           ))}
         </div>
-
       </div>
     </section>
   );

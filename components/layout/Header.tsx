@@ -2,58 +2,90 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import Image from "next/image";
-import logo from "../../public/logo.png"
+import logo from "../../public/logo.png";
+
+interface NavLink {
+  name: string;
+  href: string;
+  section?: string; // set when this link should scroll to a section on the homepage
+}
+
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
+  const router = useRouter();
 
-  const navLinks = [
+  const navLinks: NavLink[] = [
     { name: "Home", href: "/" },
     { name: "Products", href: "/products" },
-    { name: "Services", href: "/services" },
+    { name: "Services", href: "#services", section: "services" },
+    { name: "Why Us", href: "#why-choose-us", section: "why-choose-us" },
     { name: "About", href: "/about" },
     { name: "Contact", href: "/contact" },
   ];
 
   const isActive = (href: string) => pathname === href;
 
+  function handleSectionClick(e: React.MouseEvent, sectionId: string) {
+    e.preventDefault();
+    setIsOpen(false);
+
+    if (pathname === "/") {
+      document.getElementById(sectionId)?.scrollIntoView({ behavior: "smooth" });
+    } else {
+      router.push(`/#${sectionId}`);
+    }
+  }
+
+  function renderLink(link: NavLink, className: string) {
+    if (link.section) {
+      return (
+        <a
+          key={link.name}
+          href={link.href}
+          onClick={(e) => handleSectionClick(e, link.section as string)}
+          className={className}
+        >
+          {link.name}
+        </a>
+      );
+    }
+
+    return (
+      <Link key={link.name} href={link.href} onClick={() => setIsOpen(false)} className={className}>
+        {link.name}
+      </Link>
+    );
+  }
+
   return (
     <header className="sticky top-0 z-50 bg-white border-b border-gray-200 shadow-sm">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
-          
-      {/* Logo */}
-      <Link href="/" className="flex items-center gap-2">
-        <Image
-          src={logo}
-          alt="DoctorIT Logo"
-          width={210}
-          height={150}
-          className="rounded-lg"
-          priority
-        />
-        {/* <span className="text-xl font-bold text-gray-900">
-          Doctor<span className="text-blue-600">IT</span>
-        </span> */}
-      </Link>
+          {/* Logo */}
+          <Link href="/" className="flex items-center gap-2">
+            <Image
+              src={logo}
+              alt="DoctorIT Logo"
+              width={210}
+              height={150}
+              className="rounded-lg"
+              priority
+            />
+          </Link>
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center gap-8">
-            {navLinks.map((link) => (
-              <Link
-                key={link.name}
-                href={link.href}
-                className={`text-sm font-medium transition-colors hover:text-blue-600 ${
-                  isActive(link.href)
-                    ? "text-blue-600"
-                    : "text-gray-700"
-                }`}
-              >
-                {link.name}
-              </Link>
-            ))}
+            {navLinks.map((link) =>
+              renderLink(
+                link,
+                `text-sm font-medium transition-colors hover:text-blue-600 ${
+                  isActive(link.href) ? "text-blue-600" : "text-gray-700"
+                }`
+              )
+            )}
           </nav>
 
           {/* Right Side Actions */}
@@ -131,20 +163,16 @@ export default function Header() {
         {isOpen && (
           <div className="md:hidden border-t border-gray-200 py-4">
             <nav className="flex flex-col gap-3">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.name}
-                  href={link.href}
-                  onClick={() => setIsOpen(false)}
-                  className={`px-2 py-2 text-sm font-medium rounded-md ${
+              {navLinks.map((link) =>
+                renderLink(
+                  link,
+                  `px-2 py-2 text-sm font-medium rounded-md ${
                     isActive(link.href)
                       ? "bg-blue-50 text-blue-600"
                       : "text-gray-700 hover:bg-gray-50"
-                  }`}
-                >
-                  {link.name}
-                </Link>
-              ))}
+                  }`
+                )
+              )}
               <Link
                 href="/login"
                 onClick={() => setIsOpen(false)}

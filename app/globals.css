@@ -1,5 +1,7 @@
 @import "tailwindcss";
-
+html {
+  scroll-behavior: smooth;
+}
 :root {
   --background: #ffffff;
   --foreground: #171717;
@@ -55,4 +57,28 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+@keyframes swing {
+  0% {
+    transform: translate(0px, 0px) rotate(0deg);
+  }
+  20% {
+    transform: translate(5px, -7px) rotate(5deg);
+  }
+  40% {
+    transform: translate(-6px, -3px) rotate(-4deg);
+  }
+  60% {
+    transform: translate(4px, 6px) rotate(3deg);
+  }
+  80% {
+    transform: translate(-5px, 4px) rotate(-5deg);
+  }
+  100% {
+    transform: translate(0px, 0px) rotate(0deg);
+  }
+}
+
+.group:hover .group-hover\:animate-swing {
+  animation: swing 1.8s ease-in-out infinite;
 }
