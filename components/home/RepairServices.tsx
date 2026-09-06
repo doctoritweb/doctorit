@@ -354,7 +354,7 @@ export default function RepairServices() {
         </div>
 
         {/* CTA */}
-        <div className="mt-14 text-center">
+        {/* <div className="mt-14 text-center">
           <Link
             href="/services"
             className="group relative inline-flex items-center gap-3 px-9 py-4 rounded-2xl font-semibold text-lg text-white
@@ -369,7 +369,7 @@ export default function RepairServices() {
             </span>
             <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 bg-gradient-to-r from-transparent via-white/25 to-transparent" />
           </Link>
-        </div>
+        </div> */}
       </div>
     </section>
   );
