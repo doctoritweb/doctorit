@@ -82,17 +82,16 @@ const slides = [
 ];
 
 export default function HeroCarousel() {
-  const autoplay = useRef(
-    Autoplay({ delay: 5500, stopOnInteraction: false, stopOnMouseEnter: true })
+  const autoplayPlugin = useRef(
+    Autoplay({ delay: 5000, stopOnInteraction: false, stopOnMouseEnter: true })
   );
 
   const [emblaRef, emblaApi] = useEmblaCarousel(
-    { loop: true, duration: 35 },
-    [autoplay.current]
+    { loop: true },
+    [autoplayPlugin.current]
   );
 
   const [selectedIndex, setSelectedIndex] = useState(0);
-  const [scrollSnaps, setScrollSnaps] = useState<number[]>([]);
   const [isPlaying, setIsPlaying] = useState(true);
   const [progress, setProgress] = useState(0);
 
@@ -103,161 +102,103 @@ export default function HeroCarousel() {
     [emblaApi]
   );
 
-  const onSelect = useCallback(() => {
+  // Update selected index
+  useEffect(() => {
     if (!emblaApi) return;
-    setSelectedIndex(emblaApi.selectedScrollSnap());
-    setProgress(0);
+
+    const onSelect = () => {
+      setSelectedIndex(emblaApi.selectedScrollSnap());
+      setProgress(0);
+    };
+
+    emblaApi.on("select", onSelect);
+    onSelect();
+
+    return () => {
+      emblaApi.off("select", onSelect);
+    };
   }, [emblaApi]);
 
-  // Progress animation
+  // Progress bar animation
   useEffect(() => {
     if (!isPlaying) return;
 
     const start = Date.now();
-    const duration = 5500;
+    const duration = 5000;
+    let frame: number;
 
     const animate = () => {
       const elapsed = Date.now() - start;
       const value = Math.min(elapsed / duration, 1);
       setProgress(value);
-      if (value < 1) requestAnimationFrame(animate);
+      if (value < 1) {
+        frame = requestAnimationFrame(animate);
+      }
     };
 
-    const frame = requestAnimationFrame(animate);
+    frame = requestAnimationFrame(animate);
     return () => cancelAnimationFrame(frame);
   }, [selectedIndex, isPlaying]);
 
-  useEffect(() => {
-    if (!emblaApi) return;
-
-    setScrollSnaps(emblaApi.scrollSnapList());
-    onSelect();
-    emblaApi.on("select", onSelect);
-    emblaApi.on("reInit", onSelect);
-
-    return () => {
-      emblaApi.off("select", onSelect);
-    };
-  }, [emblaApi, onSelect]);
-
+  // Play / Pause
   const toggleAutoplay = () => {
-    const plugin = autoplay.current;
-    if (!plugin) return;
+    const autoplay = autoplayPlugin.current;
+    if (!autoplay) return;
 
     if (isPlaying) {
-      plugin.stop();
+      autoplay.stop();
     } else {
-      plugin.play();
+      autoplay.play();
     }
     setIsPlaying(!isPlaying);
   };
 
   return (
     <section className="relative bg-slate-950 overflow-hidden group/hero">
-      {/* Main Viewport */}
+      {/* Carousel */}
       <div className="overflow-hidden" ref={emblaRef}>
         <div className="flex">
-          {slides.map((slide, index) => (
+          {slides.map((slide) => (
             <div key={slide.id} className="relative flex-[0_0_100%] min-w-0">
-              <div className="relative h-[520px] sm:h-[580px] md:h-[640px] lg:h-[700px] xl:h-[760px]">
-                {/* Background Image + Ken Burns */}
-                <div className="absolute inset-0 overflow-hidden">
-                  <img
-                    src={slide.image}
-                    alt={slide.title}
-                    className={`absolute inset-0 w-full h-full object-cover transition-transform duration-[8000ms] ease-out will-change-transform ${
-                      index === selectedIndex ? "scale-110" : "scale-100"
-                    }`}
-                  />
-                </div>
+              <div className="relative h-[520px] md:h-[640px] lg:h-[700px]">
+                <img
+                  src={slide.image}
+                  alt={slide.title}
+                  className="absolute inset-0 w-full h-full object-cover"
+                />
 
-                {/* Multi-layer Gradients */}
-                <div className="absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-950/80 to-slate-900/30" />
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-transparent to-slate-950/40" />
-                <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_transparent_0%,_rgba(2,6,23,0.4)_100%)]" />
+                {/* Overlay */}
+                {/* <div className="absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-950/80 to-slate-900/30" /> */}
+                <div className="absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-950/50 to-transparent" />
+                
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-transparent to-transparent" />
 
                 {/* Content */}
-                <div className="relative h-full max-w-7xl mx-auto px-5 sm:px-8 lg:px-10 flex items-center">
-                  <div
-                    className={`max-w-2xl text-white transition-all duration-700 ease-out ${
-                      index === selectedIndex
-                        ? "opacity-100 translate-y-0"
-                        : "opacity-0 translate-y-8"
-                    }`}
-                  >
-                    {/* Badge */}
-                    <div
-                      className={`inline-flex items-center gap-2 mb-5 transition-all duration-700 delay-100 ${
-                        index === selectedIndex
-                          ? "opacity-100 translate-y-0"
-                          : "opacity-0 translate-y-4"
-                      }`}
-                    >
-                      <span className="px-3.5 py-1.5 rounded-full text-xs font-semibold tracking-wider uppercase bg-blue-500/20 text-blue-300 border border-blue-400/30 backdrop-blur-sm">
-                        {slide.badge}
-                      </span>
-                    </div>
+                <div className="relative h-full max-w-7xl mx-auto px-5 sm:px-8 flex items-center">
+                  <div className="max-w-2xl text-white">
+                    <span className="inline-block px-3.5 py-1.5 rounded-full text-xs font-semibold tracking-wider uppercase bg-blue-500/20 text-blue-300 border border-blue-400/30 mb-5">
+                      {slide.badge}
+                    </span>
 
-                    {/* Subtitle */}
-                    <p
-                      className={`text-blue-300/90 font-medium text-sm md:text-base mb-3 tracking-wide uppercase transition-all duration-700 delay-150 ${
-                        index === selectedIndex
-                          ? "opacity-100 translate-y-0"
-                          : "opacity-0 translate-y-4"
-                      }`}
-                    >
+                    <p className="text-blue-300 font-medium text-sm md:text-base mb-3 tracking-wide uppercase">
                       {slide.subtitle}
                     </p>
 
-                    {/* Title */}
-                    <h1
-                      className={`text-4xl sm:text-5xl md:text-6xl lg:text-[3.75rem] font-extrabold leading-[1.1] tracking-tight mb-5 transition-all duration-700 delay-200 ${
-                        index === selectedIndex
-                          ? "opacity-100 translate-y-0"
-                          : "opacity-0 translate-y-6"
-                      }`}
-                    >
+                    <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold leading-tight mb-5">
                       {slide.title}
                     </h1>
 
-                    {/* Description */}
-                    <p
-                      className={`text-lg md:text-xl text-slate-300 mb-8 max-w-lg leading-relaxed transition-all duration-700 delay-300 ${
-                        index === selectedIndex
-                          ? "opacity-100 translate-y-0"
-                          : "opacity-0 translate-y-5"
-                      }`}
-                    >
+                    <p className="text-lg md:text-xl text-slate-300 mb-8 max-w-lg leading-relaxed">
                       {slide.description}
                     </p>
 
-                    {/* CTAs */}
-                    <div
-                      className={`flex flex-wrap items-center gap-4 transition-all duration-700 delay-400 ${
-                        index === selectedIndex
-                          ? "opacity-100 translate-y-0"
-                          : "opacity-0 translate-y-5"
-                      }`}
+                    <Link
+                      href={slide.buttonLink}
+                      className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-500 text-white px-7 py-3.5 rounded-xl font-semibold text-lg transition shadow-lg"
                     >
-                      <Link
-                        href={slide.buttonLink}
-                        className="group/btn relative inline-flex items-center gap-2.5 bg-blue-600 hover:bg-blue-500 text-white px-7 py-3.5 rounded-2xl font-semibold text-base md:text-lg transition-all duration-300 shadow-xl shadow-blue-900/40 hover:shadow-blue-500/30 hover:-translate-y-0.5 overflow-hidden"
-                      >
-                        <span className="relative z-10 flex items-center gap-2.5">
-                          {slide.buttonText}
-                          <ArrowRight className="w-5 h-5 group-hover/btn:translate-x-1 transition-transform duration-300" />
-                        </span>
-                        <div className="absolute inset-0 -translate-x-full group-hover/btn:translate-x-full transition-transform duration-700 bg-gradient-to-r from-transparent via-white/20 to-transparent" />
-                      </Link>
-
-                      <Link
-                        href="/services"
-                        className="inline-flex items-center gap-2 text-slate-300 hover:text-white font-medium transition-colors duration-300"
-                      >
-                        View Services
-                        <ArrowRight className="w-4 h-4" />
-                      </Link>
-                    </div>
+                      {slide.buttonText}
+                      <ArrowRight className="w-5 h-5" />
+                    </Link>
                   </div>
                 </div>
               </div>
@@ -269,55 +210,42 @@ export default function HeroCarousel() {
       {/* Top Progress Bar */}
       <div className="absolute top-0 left-0 right-0 h-[3px] bg-white/10 z-20">
         <div
-          className="h-full bg-gradient-to-r from-blue-500 via-cyan-400 to-blue-400"
+          className="h-full bg-gradient-to-r from-blue-500 via-cyan-400 to-blue-400 transition-none"
           style={{ width: `${progress * 100}%` }}
         />
       </div>
 
-      {/* Navigation Arrows */}
+      {/* Arrows */}
       <button
         onClick={scrollPrev}
-        className="absolute left-3 sm:left-6 md:left-8 top-1/2 -translate-y-1/2 z-20 w-12 h-12 md:w-14 md:h-14 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/20 text-white flex items-center justify-center transition-all duration-300 hover:scale-105 opacity-0 group-hover/hero:opacity-100 focus:opacity-100"
-        aria-label="Previous slide"
+        className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 z-20 w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/20 text-white flex items-center justify-center transition"
       >
-        <ChevronLeft className="w-6 h-6 md:w-7 md:h-7" />
+        <ChevronLeft className="w-6 h-6" />
       </button>
 
       <button
         onClick={scrollNext}
-        className="absolute right-3 sm:right-6 md:right-8 top-1/2 -translate-y-1/2 z-20 w-12 h-12 md:w-14 md:h-14 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/20 text-white flex items-center justify-center transition-all duration-300 hover:scale-105 opacity-0 group-hover/hero:opacity-100 focus:opacity-100"
-        aria-label="Next slide"
+        className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 z-20 w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/20 text-white flex items-center justify-center transition"
       >
-        <ChevronRight className="w-6 h-6 md:w-7 md:h-7" />
+        <ChevronRight className="w-6 h-6" />
       </button>
 
       {/* Bottom Controls */}
-      <div className="absolute bottom-6 sm:bottom-8 left-0 right-0 z-20">
-        <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-10 flex items-center justify-between gap-4">
-          {/* Progress Dots */}
-          <div className="flex items-center gap-2.5">
-            {scrollSnaps.map((_, index) => (
+      <div className="absolute bottom-6 left-0 right-0 z-20">
+        <div className="max-w-7xl mx-auto px-5 sm:px-8 flex items-center justify-between">
+          
+          {/* Dots */}
+          <div className="flex items-center gap-2">
+            {slides.map((_, index) => (
               <button
                 key={index}
                 onClick={() => scrollTo(index)}
-                className="relative"
-                aria-label={`Go to slide ${index + 1}`}
-              >
-                <div
-                  className={`h-1.5 rounded-full transition-all duration-500 overflow-hidden ${
-                    index === selectedIndex
-                      ? "w-10 bg-white/30"
-                      : "w-2.5 bg-white/40 hover:bg-white/60"
-                  }`}
-                >
-                  {index === selectedIndex && (
-                    <div
-                      className="h-full bg-white rounded-full origin-left"
-                      style={{ transform: `scaleX(${progress})` }}
-                    />
-                  )}
-                </div>
-              </button>
+                className={`h-2.5 rounded-full transition-all duration-300 ${
+                  index === selectedIndex
+                    ? "w-8 bg-blue-500"
+                    : "w-2.5 bg-white/40 hover:bg-white/60"
+                }`}
+              />
             ))}
           </div>
 
@@ -325,8 +253,7 @@ export default function HeroCarousel() {
           <div className="flex items-center gap-4">
             <button
               onClick={toggleAutoplay}
-              className="w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-white/15 text-white flex items-center justify-center transition-all duration-300"
-              aria-label={isPlaying ? "Pause autoplay" : "Play autoplay"}
+              className="w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-white/15 text-white flex items-center justify-center transition"
             >
               {isPlaying ? (
                 <Pause className="w-3.5 h-3.5 fill-current" />

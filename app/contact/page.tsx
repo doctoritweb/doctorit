@@ -168,6 +168,7 @@ export default function ContactPage() {
     message: "",
   });
 
+  const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [focusedField, setFocusedField] = useState<string | null>(null);
@@ -184,11 +185,52 @@ export default function ContactPage() {
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
   ) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+
+    // Clear error when user starts typing
+    if (errors[name]) {
+      setErrors({ ...errors, [name]: "" });
+    }
   };
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
+
+    // -------- Validation --------
+    const newErrors: { [key: string]: string } = {};
+
+    if (!formData.name.trim()) {
+      newErrors.name = "Full name is required";
+    }
+
+    if (!formData.phone.trim()) {
+      newErrors.phone = "Phone number is required";
+    } else if (!/^[0-9+\-\s]{9,15}$/.test(formData.phone.trim())) {
+      newErrors.phone = "Please enter a valid phone number";
+    }
+
+    if (formData.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+      newErrors.email = "Please enter a valid email address";
+    }
+
+    if (!formData.message.trim()) {
+      newErrors.message = "Message is required";
+    } else if (formData.message.trim().length < 10) {
+      newErrors.message = "Message should be at least 10 characters";
+    }
+
+    setErrors(newErrors);
+
+    if (Object.keys(newErrors).length > 0) {
+      setToast({
+        message: "Please fix the errors in the form",
+        type: "error",
+      });
+      return;
+    }
+
+    // -------- Submit --------
     setIsSubmitting(true);
 
     try {
@@ -220,6 +262,7 @@ export default function ContactPage() {
           service: "",
           message: "",
         });
+        setErrors({});
       }, 4000);
     } catch (error) {
       setToast({
@@ -292,10 +335,10 @@ export default function ContactPage() {
                   inView={infoInView}
                 >
                   <a
-                    href="tel:+91XXXXXXXXXX"
+                    href="tel:+94777143928"
                     className="text-[#022978] hover:underline font-medium transition-colors"
                   >
-                    +91 XXXXX XXXXX
+                    +94 777143928
                   </a>
                 </ContactCard>
 
@@ -307,7 +350,7 @@ export default function ContactPage() {
                   inView={infoInView}
                 >
                   <a
-                    href="https://wa.me/91XXXXXXXXXX"
+                    href="https://wa.me/94777143928"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-green-600 hover:underline font-medium transition-colors"
@@ -322,12 +365,12 @@ export default function ContactPage() {
                   delay={240}
                   inView={infoInView}
                 >
-                <a
-                  href="mailto:ieltspreparationkandy@gmail.com"
-                  className="text-[#022978] hover:underline font-medium transition-colors"
-                >
-                  ieltspreparationkandy<span className="hidden">null</span>@gmail.com
-                </a>
+                  <a
+                    href="mailto:doctoritweb@gmail.com"
+                    className="text-[#022978] hover:underline font-medium transition-colors"
+                  >
+                    doctoritweb@gmail.com
+                  </a>
                 </ContactCard>
 
                 <ContactCard
@@ -337,9 +380,9 @@ export default function ContactPage() {
                   inView={infoInView}
                 >
                   <p className="text-slate-600 leading-relaxed">
-                    123, IT Market Road,
+                    No.1014/1/1, Vihara Mawatha,
                     <br />
-                    Your City, State - 000000
+                    Kelaniya, Sri Lanka.
                   </p>
                 </ContactCard>
 
@@ -350,7 +393,7 @@ export default function ContactPage() {
                   inView={infoInView}
                 >
                   <p className="text-slate-600 leading-relaxed">
-                    Monday - Saturday: 10:00 AM - 8:00 PM
+                    Monday - Saturday: 9:00 AM - 6:00 PM
                     <br />
                     Sunday: Closed
                   </p>
@@ -391,7 +434,7 @@ export default function ContactPage() {
                     </p>
                   </div>
                 ) : (
-                  <form onSubmit={handleSubmit} className="space-y-5">
+                  <form onSubmit={handleSubmit} className="space-y-5" noValidate>
                     {/* Name */}
                     <div>
                       <label className="block text-sm font-medium text-slate-700 mb-1.5">
@@ -400,7 +443,6 @@ export default function ContactPage() {
                       <input
                         type="text"
                         name="name"
-                        required
                         value={formData.name}
                         onChange={handleChange}
                         onFocus={() => setFocusedField("name")}
@@ -411,12 +453,17 @@ export default function ContactPage() {
                           text-slate-900 placeholder:text-slate-400
                           outline-none transition-all duration-300
                           ${
-                            focusedField === "name"
+                            errors.name
+                              ? "border-red-400 ring-2 ring-red-100"
+                              : focusedField === "name"
                               ? "border-[#022978] ring-2 ring-blue-100 shadow-sm"
                               : "border-slate-300 hover:border-slate-400"
                           }
                         `}
                       />
+                      {errors.name && (
+                        <p className="mt-1.5 text-sm text-red-600">{errors.name}</p>
+                      )}
                     </div>
 
                     {/* Phone */}
@@ -427,7 +474,6 @@ export default function ContactPage() {
                       <input
                         type="tel"
                         name="phone"
-                        required
                         value={formData.phone}
                         onChange={handleChange}
                         onFocus={() => setFocusedField("phone")}
@@ -438,12 +484,17 @@ export default function ContactPage() {
                           text-slate-900 placeholder:text-slate-400
                           outline-none transition-all duration-300
                           ${
-                            focusedField === "phone"
+                            errors.phone
+                              ? "border-red-400 ring-2 ring-red-100"
+                              : focusedField === "phone"
                               ? "border-[#022978] ring-2 ring-blue-100 shadow-sm"
                               : "border-slate-300 hover:border-slate-400"
                           }
                         `}
                       />
+                      {errors.phone && (
+                        <p className="mt-1.5 text-sm text-red-600">{errors.phone}</p>
+                      )}
                     </div>
 
                     {/* Email */}
@@ -464,12 +515,17 @@ export default function ContactPage() {
                           text-slate-900 placeholder:text-slate-400
                           outline-none transition-all duration-300
                           ${
-                            focusedField === "email"
+                            errors.email
+                              ? "border-red-400 ring-2 ring-red-100"
+                              : focusedField === "email"
                               ? "border-[#022978] ring-2 ring-blue-100 shadow-sm"
                               : "border-slate-300 hover:border-slate-400"
                           }
                         `}
                       />
+                      {errors.email && (
+                        <p className="mt-1.5 text-sm text-red-600">{errors.email}</p>
+                      )}
                     </div>
 
                     {/* Service */}
@@ -511,7 +567,6 @@ export default function ContactPage() {
                       </label>
                       <textarea
                         name="message"
-                        required
                         rows={4}
                         value={formData.message}
                         onChange={handleChange}
@@ -523,12 +578,17 @@ export default function ContactPage() {
                           text-slate-900 placeholder:text-slate-400
                           outline-none transition-all duration-300
                           ${
-                            focusedField === "message"
+                            errors.message
+                              ? "border-red-400 ring-2 ring-red-100"
+                              : focusedField === "message"
                               ? "border-[#022978] ring-2 ring-blue-100 shadow-sm"
                               : "border-slate-300 hover:border-slate-400"
                           }
                         `}
                       />
+                      {errors.message && (
+                        <p className="mt-1.5 text-sm text-red-600">{errors.message}</p>
+                      )}
                     </div>
 
                     {/* Submit Button */}
