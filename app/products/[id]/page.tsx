@@ -63,6 +63,7 @@ const images = {
 
 const categoriesList = ["Laptops", "Phones", "Accessories", "Monitors", "Components"];
 
+
 function generateProducts(): Product[] {
   const products: Product[] = [];
   let id = 1;
@@ -96,6 +97,13 @@ function generateProducts(): Product[] {
 }
 
 const products = generateProducts();
+
+// Add this
+export function generateStaticParams() {
+  return products.map((product) => ({
+    id: product.id.toString(),
+  }));
+}
 
 interface PageProps {
   params: Promise<{ id: string }>;

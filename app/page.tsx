@@ -11,7 +11,7 @@ import BookRepairCTA from "@/components/home/BookRepairCTA";
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50" >
     {/* ========== HERO SECTION ========== */}
     <HeroCarousel/>
     <RepairServices/>
