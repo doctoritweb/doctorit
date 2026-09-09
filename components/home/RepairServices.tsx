@@ -93,7 +93,7 @@ const services = [
     description:
       "Complete PC setup for home users — OS, software, drivers, SSD/RAM upgrade and speed boost.",
     icon: Cpu,
-    href: "/services/hardware-upgrade",
+    href: "/services/pc-setup-upgrade",
     gradient: "from-blue-600 to-indigo-600",
     light: "bg-blue-50",
     text: "text-blue-700",
