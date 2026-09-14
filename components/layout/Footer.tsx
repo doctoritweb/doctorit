@@ -2,8 +2,10 @@
 
 import Link from "next/link";
 import { Phone, Mail, MapPin, Clock, ArrowUp, Send } from "lucide-react";
-import { FaFacebookF, FaInstagram, FaYoutube, FaWhatsapp } from "react-icons/fa";
+import { FaFacebookF, FaInstagram, FaYoutube, FaWhatsapp , FaTiktok} from "react-icons/fa";
 import { useState, useEffect } from "react";
+import logo from "../../public/logo.png";
+import Image from "next/image";
 
 export default function Footer() {
   const [showTopBtn, setShowTopBtn] = useState(false);
@@ -42,9 +44,16 @@ export default function Footer() {
 
           {/* Column 1 - About */}
           <div className="space-y-5">
-            <h3 className="text-white text-2xl font-bold tracking-tight">
-              Doctor<span className="text-blue-500">IT</span>
-            </h3>
+          <Link href="/" className="flex items-center gap-2 shrink-0">
+            <Image
+              src={logo}
+              alt="DoctorIT Logo"
+              width={180}
+              height={120}
+              className="rounded-lg"
+              priority
+            />
+          </Link>
             <p className="text-slate-400 leading-relaxed text-[15px]">
               Professional laptop, desktop & printer repair services.  
               We also sell quality computer parts and accessories.
@@ -53,10 +62,11 @@ export default function Footer() {
             {/* Social Links */}
             <div className="flex gap-3 pt-2">
               {[
-                { icon: FaFacebookF, href: "#", label: "Facebook", hover: "hover:bg-blue-600" },
+                { icon: FaFacebookF, href: "https://www.facebook.com/doctorit.lk", label: "Facebook", hover: "hover:bg-blue-600" },
                 { icon: FaInstagram, href: "#", label: "Instagram", hover: "hover:bg-pink-600" },
                 { icon: FaYoutube, href: "#", label: "YouTube", hover: "hover:bg-red-600" },
                 { icon: FaWhatsapp, href: "#", label: "WhatsApp", hover: "hover:bg-green-600" },
+                { icon: FaTiktok, href: "#", label: "TikTok", hover: "hover:bg-black" },
               ].map((social, i) => (
                 <a
                   key={i}
@@ -131,36 +141,37 @@ export default function Footer() {
                     <MapPin className="w-4 h-4 text-blue-400 group-hover:text-white transition-colors" />
                   </div>
                   <span className="text-slate-400 text-sm leading-relaxed pt-1.5">
-                    123, IT Market, Your City, State - 000000
+                    No.1014/1/1, Vihara Mawatha,
+                    Kelaniya, Sri Lanka.
                   </span>
                 </li>
                 <li className="flex items-center gap-3 group">
                   <div className="w-9 h-9 rounded-lg bg-slate-800 border border-slate-700 flex items-center justify-center flex-shrink-0 group-hover:bg-blue-600 group-hover:border-blue-600 transition-all duration-300">
                     <Phone className="w-4 h-4 text-blue-400 group-hover:text-white transition-colors" />
                   </div>
-                  <a href="tel:+91XXXXXXXXXX" className="text-slate-400 hover:text-blue-400 transition text-sm">
-                    +91 XXXXX XXXXX
+                  <a href="tel:+94777143928" className="text-slate-400 hover:text-blue-400 transition text-sm">
+                    +94777143928
                   </a>
                 </li>
                 <li className="flex items-center gap-3 group">
                   <div className="w-9 h-9 rounded-lg bg-slate-800 border border-slate-700 flex items-center justify-center flex-shrink-0 group-hover:bg-blue-600 group-hover:border-blue-600 transition-all duration-300">
                     <Mail className="w-4 h-4 text-blue-400 group-hover:text-white transition-colors" />
                   </div>
-                  <a href="mailto:info@doctorit.com" className="text-slate-400 hover:text-blue-400 transition text-sm">
-                    info@doctorit.com
+                  <a href="mailto:doctoritweb@gmail.com" className="text-slate-400 hover:text-blue-400 transition text-sm">
+                    doctoritweb@gmail.com
                   </a>
                 </li>
                 <li className="flex items-center gap-3 group">
                   <div className="w-9 h-9 rounded-lg bg-slate-800 border border-slate-700 flex items-center justify-center flex-shrink-0 group-hover:bg-blue-600 group-hover:border-blue-600 transition-all duration-300">
                     <Clock className="w-4 h-4 text-blue-400 group-hover:text-white transition-colors" />
                   </div>
-                  <span className="text-slate-400 text-sm">Mon - Sat: 10:00 AM - 8:00 PM</span>
+                  <span className="text-slate-400 text-sm">Mon - Sat: 9:30 AM - 5:30 PM</span>
                 </li>
               </ul>
             </div>
 
             {/* Newsletter */}
-            <div>
+            {/* <div>
               <h4 className="text-white font-semibold text-sm mb-3">Get Repair Tips</h4>
               <form onSubmit={handleSubscribe} className="flex gap-2">
                 <input
@@ -177,7 +188,7 @@ export default function Footer() {
                   <Send className="w-4 h-4" />
                 </button>
               </form>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

@@ -114,6 +114,8 @@ const audiences = [
       "SSD / RAM upgrades",
     ],
     gradient: "from-blue-500 to-cyan-600",
+    href: "/services/home-personal",          // change if you create a specific page
+    text: "text-blue-600",
   },
   {
     icon: Building2,
@@ -126,6 +128,8 @@ const audiences = [
       "Quick on-site support",
     ],
     gradient: "from-indigo-500 to-violet-600",
+    href: "/services/small-business",
+    text: "text-indigo-600",
   },
   {
     icon: Factory,
@@ -138,6 +142,8 @@ const audiences = [
       "System deployment at scale",
     ],
     gradient: "from-slate-700 to-slate-900",
+    href: "/services/industries",
+    text: "text-slate-700",
   },
 ];
 
@@ -235,9 +241,12 @@ export default function RepairServices() {
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             {audiences.map((item, index) => (
-              <div
+              <Link
                 key={index}
-                className="group bg-slate-50 border border-slate-200 rounded-3xl p-8 hover:bg-white hover:shadow-xl hover:border-slate-300 transition-all duration-400"
+                href={item.href}
+                className="group bg-slate-50 border border-slate-200 rounded-3xl p-8 
+                  hover:bg-white hover:shadow-xl hover:border-slate-300 
+                  hover:-translate-y-1 transition-all duration-400"
               >
                 <div
                   className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${item.gradient} 
@@ -255,7 +264,7 @@ export default function RepairServices() {
                   {item.desc}
                 </p>
 
-                <ul className="space-y-2.5">
+                <ul className="space-y-2.5 mb-6">
                   {item.points.map((point, i) => (
                     <li key={i} className="flex items-center gap-2.5 text-sm text-slate-700">
                       <span className="w-1.5 h-1.5 rounded-full bg-blue-500 flex-shrink-0" />
@@ -263,7 +272,15 @@ export default function RepairServices() {
                     </li>
                   ))}
                 </ul>
-              </div>
+
+                {/* View Details - same style as service cards */}
+                <div className={`flex items-center gap-2 text-sm font-semibold ${item.text}`}>
+                  <span className="group-hover:underline underline-offset-4 decoration-2">
+                    View Details
+                  </span>
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1.5 transition-transform duration-300" />
+                </div>
+              </Link>
             ))}
           </div>
         </div>

@@ -16,7 +16,7 @@ const slides = [
     image:
       "https://images.unsplash.com/photo-1603302576837-37561b2e2302?w=1600&h=800&fit=crop",
     buttonText: "Book Laptop Repair",
-    buttonLink: "/services",
+    buttonLink: "/contact",
     badge: "24-48 Hrs",
   },
   {
@@ -28,7 +28,7 @@ const slides = [
     image:
       "https://images.unsplash.com/photo-1587202372775-e229f172b9d7?w=1600&h=800&fit=crop",
     buttonText: "Book PC Repair",
-    buttonLink: "/services",
+    buttonLink: "/contact",
     badge: "Full Service",
   },
   {
@@ -40,7 +40,7 @@ const slides = [
     image:
       "https://images.unsplash.com/photo-1597872200969-2b65d56bd16b?w=1600&h=800&fit=crop",
     buttonText: "Recover Data",
-    buttonLink: "/services",
+    buttonLink: "/contact",
     badge: "High Success",
   },
   {
@@ -52,7 +52,7 @@ const slides = [
     image:
       "https://images.unsplash.com/photo-1563986768609-322da13575f3?w=1600&h=800&fit=crop",
     buttonText: "Network Solutions",
-    buttonLink: "/services",
+    buttonLink: "/contact",
     badge: "Home & Office",
   },
   {
@@ -64,7 +64,7 @@ const slides = [
     image:
       "https://images.unsplash.com/photo-1517077304055-6e89abbf09b0?w=1600&h=800&fit=crop",
     buttonText: "Setup & Upgrade",
-    buttonLink: "/services",
+    buttonLink: "/contact",
     badge: "Ready to Use",
   },
   {
