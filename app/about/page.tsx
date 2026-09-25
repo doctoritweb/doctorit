@@ -260,9 +260,10 @@ export default function AboutPage() {
                 laptops, desktops, printers, and more.
               </p>
               <p className="text-slate-600 text-lg leading-relaxed">
-                We started with a simple goal — to help people and businesses get
-                their devices working again without the high costs and long
-                waiting times of big service centers.
+DoctorIT  we  have served you for the past fourteen years.(Since 2012)
+Now  we have expanded our set up to serve you better.
+We started with a simple goal to help people and businesses get their devices working again
+ without the high costs and long waiting times of big service centers.
               </p>
               <p className="text-slate-600 text-lg leading-relaxed">
                 Today, we proudly serve hundreds of customers with genuine spare
@@ -273,7 +274,7 @@ export default function AboutPage() {
             {/* Right – Stats */}
             <div ref={statsRef} className="grid grid-cols-2 gap-5 sm:gap-6">
               <StatCard
-                value={5}
+                value={14}
                 suffix="+"
                 label="Years Experience"
                 startCounting={statsInView}

@@ -234,7 +234,7 @@ export default function ContactPage() {
     setIsSubmitting(true);
 
     try {
-      const res = await fetch("https://formspree.io/f/xljewrgb", {
+      const res = await fetch("https://formspree.io/f/xoevwowb", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -335,10 +335,10 @@ export default function ContactPage() {
                   inView={infoInView}
                 >
                   <a
-                    href="tel:+94777143928"
+                    href="tel:+94727348466"
                     className="text-[#022978] hover:underline font-medium transition-colors"
                   >
-                    +94 777143928
+                    +94 727348466
                   </a>
                 </ContactCard>
 
@@ -350,7 +350,7 @@ export default function ContactPage() {
                   inView={infoInView}
                 >
                   <a
-                    href="https://wa.me/94777143928"
+                    href="https://wa.me/94727348466"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-green-600 hover:underline font-medium transition-colors"
@@ -366,10 +366,10 @@ export default function ContactPage() {
                   inView={infoInView}
                 >
                   <a
-                    href="mailto:doctoritweb@gmail.com"
+                    href="mailto:info@doctorit.lk"
                     className="text-[#022978] hover:underline font-medium transition-colors"
                   >
-                    doctoritweb@gmail.com
+                    info@doctorit.lk
                   </a>
                 </ContactCard>
 
@@ -382,7 +382,7 @@ export default function ContactPage() {
                   <p className="text-slate-600 leading-relaxed">
                     No.1014/1/1, Vihara Mawatha,
                     <br />
-                    Kelaniya, Sri Lanka.
+                    Kelaniya,(11600) Sri Lanka.
                   </p>
                 </ContactCard>
 

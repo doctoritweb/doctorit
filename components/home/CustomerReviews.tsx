@@ -15,29 +15,72 @@ interface Review {
 const reviews: Review[] = [
   {
     id: 1,
-    name: "Rahul Sharma",
+    name: "Ruwan Tharanga",
     role: "Laptop Repair",
     rating: 5,
     comment:
-      "My laptop screen was broken. They replaced it the same day with genuine parts. Excellent service and fair price!",
+      `I recently had my 4-year-old custom-built PC fully serviced by Doctor IT, and I couldn't be happier with the results. This is not the first time I have used their services, and once again they exceeded my expectations.
+
+I was present throughout the entire process, from 9:00 AM until 3:30 PM, and I personally witnessed the level of care, professionalism, and attention to detail that went into every step of the service.
+
+My Cooler Master case was completely cleaned, including the metal mesh panels, which were removed, treated for rust, and repainted. All three case fans were disassembled, thoroughly cleaned, serviced, and reinstalled. The motherboard, an ASUS TUF Gaming X570-Plus, received a complete deep clean, with thermal paste replaced where necessary. The CPU cooler, heatsinks, chipset fan, and other components were carefully cleaned and serviced.
+
+The graphics card was also fully disassembled, cleaned, fitted with fresh thermal paste, and performance-tested afterward. In addition, the motherboard was checked using diagnostic tools to ensure everything was functioning correctly.
+
+What impressed me most was the dedication to doing the job properly rather than rushing through it. By the time the work was completed, my PC looked and felt like a brand-new system.
+
+I would especially like to thank Mr. Cheruka, the owner of Doctor IT, for personally handling my PC. His technical knowledge, professionalism, and willingness to explain the work being done were truly impressive. It is clear that he takes great pride in his work and genuinely cares about customer satisfaction. I would also like to thank his assistant, who worked alongside him and contributed greatly to the service process.
+
+In addition to servicing and repairing computers, Doctor IT also sells computer systems and components and provides laptop repair services. From what I have seen, they have the proper tools, equipment, and expertise to handle everything from routine maintenance to advanced electronic repairs. Their capabilities extend beyond standard computer servicing to component-level repairs on motherboards, graphics cards, sound cards, and other hardware. They also repair and troubleshoot peripherals and devices such as keyboards, mice, monitors, and other computer-related equipment.
+
+It is rare to find this level of workmanship, honesty, technical expertise, and attention to detail today. I highly recommend Doctor IT to anyone looking for professional computer repairs, maintenance, diagnostics, upgrades, or electronic hardware repairs. Thank you again to Mr. Cheruka and the entire team for the outstanding service and for bringing my PC back to life.`,
     helpful: 6,
   },
   {
     id: 2,
-    name: "Priya Patel",
-    role: "Data Recovery",
+    name: "Buddhini Welikala",
+    role: "Laptop Repair",
     rating: 5,
     comment:
-      "I thought I lost all my important files. They recovered everything successfully. Highly recommended!",
+      `Their service is Excellent and very fast. My laptop's display wasn't functioning and I gave it them in the morning. They've replaced the screen, serviced it, and returned it in the afternoon. The pricing is very fair. Very friendly and helpful communication.
+Highly recommended 🙏🙏💐
+Thank you so much for the great support and service 💐💐🙏`,
     helpful: 9,
   },
   {
     id: 3,
-    name: "Amit Verma",
-    role: "Desktop Repair",
+    name: "Rehan Jazeel (Parzival)",
+    role: `Laptop Repair`,
     rating: 5,
     comment:
-      "My PC was very slow. They upgraded the SSD and cleaned it properly. Now it works like new. Great work!",
+      `Absolute 10/10 service. Prompt service, proper care and handling. Had a problem with my laptop fans which was resolved in less than an hour. Very reasonable prices as well.`,
+    helpful: 4,
+  },
+  {
+    id: 4,
+    name: "Tran Van Phong",
+    role: `Laptop and UPS Repair`,
+    rating: 5,
+    comment:
+      `I'm from Vietnam! I came with a computer and a UPS. They were very enthusiastic, had an open attitude, repaired quickly, and the prices were reasonable. May the Triple Gem bless me with good health.`,
+    helpful: 4,
+  },
+  {
+    id: 5,
+    name: "Udaya Gunathilaka",
+    role: `PC and Laptops`,
+    rating: 5,
+    comment:
+      `One of the finest service station for your PC and Laptops in colombo. Genuine and friendly service. I took my PC and resolve the issue with in few minutes. Also they provide many services as well`,
+    helpful: 4,
+  },
+    {
+    id: 6,
+    name: "Supun Sameera",
+    role: `PC and Laptops`,
+    rating: 5,
+    comment:
+      `Skilled technician. Repaired my mechanical keyboard quickly with good care.`,
     helpful: 4,
   },
 ];

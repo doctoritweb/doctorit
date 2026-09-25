@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { Phone, Mail, MapPin, Clock, ArrowUp, Send } from "lucide-react";
-import { FaFacebookF, FaInstagram, FaYoutube, FaWhatsapp , FaTiktok} from "react-icons/fa";
+import { FaFacebookF, FaInstagram, FaYoutube, FaWhatsapp, FaTiktok } from "react-icons/fa";
 import { useState, useEffect } from "react";
 import logo from "../../public/logo.png";
 import Image from "next/image";
@@ -11,7 +11,6 @@ export default function Footer() {
   const [showTopBtn, setShowTopBtn] = useState(false);
   const [email, setEmail] = useState("");
 
-  // Show "Back to Top" button after scrolling
   useEffect(() => {
     const handleScroll = () => {
       setShowTopBtn(window.scrollY > 400);
@@ -44,16 +43,16 @@ export default function Footer() {
 
           {/* Column 1 - About */}
           <div className="space-y-5">
-          <Link href="/" className="flex items-center gap-2 shrink-0">
-            <Image
-              src={logo}
-              alt="DoctorIT Logo"
-              width={180}
-              height={120}
-              className="rounded-lg"
-              priority
-            />
-          </Link>
+            <Link href="/" className="flex items-center gap-2 shrink-0">
+              <Image
+                src={logo}
+                alt="DoctorIT Logo"
+                width={180}
+                height={120}
+                className="rounded-lg"
+                priority
+              />
+            </Link>
             <p className="text-slate-400 leading-relaxed text-[15px]">
               Professional laptop, desktop & printer repair services.  
               We also sell quality computer parts and accessories.
@@ -65,12 +64,14 @@ export default function Footer() {
                 { icon: FaFacebookF, href: "https://www.facebook.com/doctorit.lk", label: "Facebook", hover: "hover:bg-blue-600" },
                 { icon: FaInstagram, href: "#", label: "Instagram", hover: "hover:bg-pink-600" },
                 { icon: FaYoutube, href: "#", label: "YouTube", hover: "hover:bg-red-600" },
-                { icon: FaWhatsapp, href: "#", label: "WhatsApp", hover: "hover:bg-green-600" },
-                { icon: FaTiktok, href: "#", label: "TikTok", hover: "hover:bg-black" },
+                { icon: FaWhatsapp, href: "https://wa.me/94777143928", label: "WhatsApp", hover: "hover:bg-green-600" },
+                { icon: FaTiktok, href: "https://vm.tiktok.com/ZS9SGtk3kmhhE-6FB8R/", label: "TikTok", hover: "hover:bg-black" },
               ].map((social, i) => (
                 <a
                   key={i}
                   href={social.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   aria-label={social.label}
                   className={`w-10 h-10 rounded-xl bg-slate-800/80 border border-slate-700 
                     flex items-center justify-center text-slate-300 
@@ -89,8 +90,9 @@ export default function Footer() {
             <ul className="space-y-3">
               {[
                 { name: "Home", href: "/" },
-                { name: "Services", href: "/#services", section: "services" },
-                { name: "Products", href: "/products" },
+                // { name: "Products", href: "/products" },
+                { name: "Services", href: "/#services" },
+                { name: "Portfolio", href: "/portfolio" },
                 { name: "About", href: "/about" },
                 { name: "Contact", href: "/contact" },
               ].map((link) => (
@@ -116,7 +118,7 @@ export default function Footer() {
                 { name: "Desktop Repair", href: "/services/desktop-repair" },
                 { name: "Printer Repair", href: "/services/printer-repair" },
                 { name: "Data Recovery", href: "/services/data-recovery" },
-                { name: "Hardware Upgrade", href: "/services/hardware-upgrade" },
+                { name: "Hardware Upgrade", href: "/services/pc-setup-upgrade" },
               ].map((link) => (
                 <li key={link.name}>
                   <Link
@@ -131,7 +133,7 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Column 4 - Contact + Newsletter */}
+          {/* Column 4 - Contact */}
           <div className="space-y-6">
             <div>
               <h4 className="text-white font-semibold text-lg mb-5">Contact Us</h4>
@@ -142,23 +144,23 @@ export default function Footer() {
                   </div>
                   <span className="text-slate-400 text-sm leading-relaxed pt-1.5">
                     No.1014/1/1, Vihara Mawatha,
-                    Kelaniya, Sri Lanka.
+                    Kelaniya, (11600) Sri Lanka.
                   </span>
                 </li>
                 <li className="flex items-center gap-3 group">
                   <div className="w-9 h-9 rounded-lg bg-slate-800 border border-slate-700 flex items-center justify-center flex-shrink-0 group-hover:bg-blue-600 group-hover:border-blue-600 transition-all duration-300">
                     <Phone className="w-4 h-4 text-blue-400 group-hover:text-white transition-colors" />
                   </div>
-                  <a href="tel:+94777143928" className="text-slate-400 hover:text-blue-400 transition text-sm">
-                    +94777143928
+                  <a href="tel:+94727348466" className="text-slate-400 hover:text-blue-400 transition text-sm">
+                    +94 727348466
                   </a>
                 </li>
                 <li className="flex items-center gap-3 group">
                   <div className="w-9 h-9 rounded-lg bg-slate-800 border border-slate-700 flex items-center justify-center flex-shrink-0 group-hover:bg-blue-600 group-hover:border-blue-600 transition-all duration-300">
                     <Mail className="w-4 h-4 text-blue-400 group-hover:text-white transition-colors" />
                   </div>
-                  <a href="mailto:doctoritweb@gmail.com" className="text-slate-400 hover:text-blue-400 transition text-sm">
-                    doctoritweb@gmail.com
+                  <a href="mailto:info@doctorit.lk" className="text-slate-400 hover:text-blue-400 transition text-sm">
+                    info@doctorit.lk
                   </a>
                 </li>
                 <li className="flex items-center gap-3 group">
@@ -169,26 +171,6 @@ export default function Footer() {
                 </li>
               </ul>
             </div>
-
-            {/* Newsletter */}
-            {/* <div>
-              <h4 className="text-white font-semibold text-sm mb-3">Get Repair Tips</h4>
-              <form onSubmit={handleSubscribe} className="flex gap-2">
-                <input
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="Your email"
-                  className="flex-1 bg-slate-800/80 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-white placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
-                />
-                <button
-                  type="submit"
-                  className="bg-blue-600 hover:bg-blue-500 text-white rounded-xl px-4 py-2.5 transition-all duration-300 hover:shadow-lg hover:shadow-blue-600/30"
-                >
-                  <Send className="w-4 h-4" />
-                </button>
-              </form>
-            </div> */}
           </div>
         </div>
       </div>
@@ -196,14 +178,31 @@ export default function Footer() {
       {/* Bottom Bar */}
       <div className="relative border-t border-slate-800/80">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5 flex flex-col sm:flex-row justify-between items-center gap-3 text-sm text-slate-500">
+          
           <p>© {new Date().getFullYear()} DoctorIT. All rights reserved.</p>
-          <div className="flex gap-6">
-            <Link href="/privacy-policy" className="hover:text-blue-400 transition duration-300">
-              Privacy Policy
-            </Link>
-            <Link href="/terms" className="hover:text-blue-400 transition duration-300">
-              Terms of Service
-            </Link>
+
+          <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6">
+            <div className="flex gap-6">
+              <Link href="/privacy-policy" className="hover:text-blue-400 transition duration-300">
+                Privacy Policy
+              </Link>
+              <Link href="/terms" className="hover:text-blue-400 transition duration-300">
+                Terms of Service
+              </Link>
+            </div>
+
+            {/* Developer Credit */}
+            <p className="text-slate-500">
+              Developed by{" "}
+              <a
+                href="https://cb95.xyz"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-blue-400 hover:text-blue-300 transition font-medium"
+              >
+                cb95.xyz
+              </a>
+            </p>
           </div>
         </div>
       </div>

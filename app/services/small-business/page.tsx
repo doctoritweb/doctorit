@@ -160,7 +160,7 @@ export default function SmallBusinessPage() {
                 <ArrowRight className="w-5 h-5" />
               </Link>
               <a
-                href="tel:+94777143928"
+                href="tel:+94727348466"
                 className="inline-flex items-center justify-center gap-2 bg-white/10 hover:bg-white/20 border border-white/30 px-8 py-4 rounded-2xl font-semibold text-lg transition-all"
               >
                 <Phone className="w-5 h-5" />
@@ -410,11 +410,11 @@ export default function SmallBusinessPage() {
               <ArrowRight className="w-5 h-5" />
             </Link>
             <a
-              href="tel:+94777143928"
+              href="tel:+94727348466"
               className="inline-flex items-center justify-center gap-2 bg-white/10 hover:bg-white/20 border border-white/30 px-8 py-4 rounded-2xl font-semibold text-lg transition-all"
             >
               <Phone className="w-5 h-5" />
-              +94 777 143 928
+              +94 727348466
             </a>
           </div>
         </div>

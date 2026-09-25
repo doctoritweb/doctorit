@@ -137,7 +137,7 @@ export default function BookRepairCTA() {
 
           {/* WhatsApp */}
           <a
-            href="https://wa.me/91XXXXXXXXXX"
+            href="https://wa.me/94727348466"
             target="_blank"
             rel="noopener noreferrer"
             onMouseEnter={() => setHoveredBtn("whatsapp")}
@@ -157,7 +157,7 @@ export default function BookRepairCTA() {
 
           {/* Call */}
           <a
-            href="tel:+91XXXXXXXXXX"
+            href="tel:+94727348466"
             onMouseEnter={() => setHoveredBtn("call")}
             onMouseLeave={() => setHoveredBtn(null)}
             className="group relative inline-flex items-center gap-3 border-2 border-white/20 bg-white/5 hover:bg-white hover:text-slate-900 text-white px-9 py-4.5 rounded-2xl font-bold text-lg transition-all duration-300 hover:-translate-y-1.5 backdrop-blur-sm"
